@@ -1,0 +1,132 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="secondary">
+            <ion-button [routerLink]="['/']">
+                <ion-icon
+                    slot="icon-only"
+                    name="home"
+                ></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title>Interactions médicamenteuses</ion-title>
+
+        <ion-buttons slot="primary">
+            <ion-button>
+                <ion-icon
+                    slot="icon-only"
+                    name="pin"
+                ></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <ion-icon name="arrow-back"></ion-icon>
+                <a [routerLink]="['/tabs/tab3']">Retour</a>
+            </ion-col>
+            <ion-col size="12">Interactions médicamenteuses</ion-col>
+            <ion-col size="12">
+                <ion-note>
+                    Recherchez par DCI pour obtenir les usages proscrits ainsi que les associations déconseillées.
+                </ion-note>
+            </ion-col>
+            <ion-col size="12">
+
+                <div
+                    class="reactive-form"
+                    style="margin-top: 10px;"
+                >
+
+                    <form
+                        autocomplete="off"
+                        novalidate
+                        [formGroup]="reactiveForm"
+                        (ngSubmit)="submitReactiveForm($event)"
+                    >
+                        <div class="container">
+                            <div class="ng-autocomplete">
+                                <ng-autocomplete
+                                    [data]="dci"
+                                    formControlName="name"
+                                    [initialValue]
+                                    [placeHolder]="placeholder"
+                                    [searchKeyword]="keyword"
+                                    historyIdentifier="dci"
+                                    [historyHeading]="historyHeading"
+                                    historyListMaxNumber="3"
+                                    notFoundText="Not found"
+                                    [itemTemplate]="itemTemplateStatic"
+                                    [notFoundTemplate]="notFoundTemplate"
+                                >
+                                </ng-autocomplete>
+
+                                <ng-template
+                                    #itemTemplateStatic
+                                    let-item
+                                >
+                                    <a [innerHTML]="item.ATCNM_F"></a>
+                                </ng-template>
+
+                                <ng-template
+                                    #notFoundTemplate
+                                    let-notFound
+                                >
+                                    <div [innerHTML]="notFound"></div>
+                                </ng-template>
+                            </div>
+
+                            <ion-button
+                                expand="block"
+                                color="primary"
+                                [disabled]="reactiveForm.invalid"
+                                (click)="save_outage_index()"
+                                ion-button
+                                type="submit"
+                                block
+                            >
+                                Recherchez
+                            </ion-button>
+
+                        </div>
+                    </form>
+         
+
+                    <div *ngFor="let i  of inter">
+                        <div>
+                            <ion-label>
+                                <strong>{{i.titre}}</strong>
+                            </ion-label>
+                        </div>
+                        <div *ngIf="i.assocList">
+                            <div *ngFor="let a of i.assocList">
+                                <ion-list>
+                                    <ion-item>
+                                        <ion-label>
+                                            <ion-icon name="add"></ion-icon> <strong>{{a.sousTitre}}</strong>
+                                        </ion-label>
+                                    </ion-item>
+                                    <ion-chip outline color="danger">
+                                            <ion-label>Danger</ion-label>
+                                          </ion-chip>
+                                    {{a.conseq}} <br>                                                                  
+                                    {{a.emploi}}  <br>                                                              
+                                    {{a.emploiDesc}} <br>                                
+                                  
+                                </ion-list>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </ion-col>
+            <ion-col size="12"></ion-col>
+            <ion-col size="12"></ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer></ion-footer>

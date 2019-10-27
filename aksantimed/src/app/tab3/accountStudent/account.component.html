@@ -1,0 +1,154 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="secondary">
+            <ion-button [routerLink]="['/login']">
+                <ion-icon
+                    slot="icon-only"
+                    name="person"
+                ></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title>Etudiants</ion-title>
+
+        <ion-buttons slot="primary">
+            <ion-button [routerLink]="['/cartographie']">
+                <ion-icon
+                    slot="icon-only"
+                    name="pin"
+                ></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+
+        <ion-row>
+            <ion-col size="12">
+                <ion-icon name="arrow-back"></ion-icon>
+                <a [routerLink]="['/login']">Retour</a>
+            </ion-col>
+            <ion-col size="12">Inscrivez-vous</ion-col>
+            <ion-col size="12">
+                <ion-note>
+                    Les renseignements fournis sont validés par les autorités compétentes.
+                    <br>
+                    L'inscription aux services Aksantimed est reservée aux universités (Corps enseignants, étudiants).
+                    <br>
+                </ion-note>
+            </ion-col>
+            <ion-col>
+                <form
+                    class="form"
+                    [formGroup]="account_form"
+                    (ngSubmit)="tryRegister(account_form)"
+                >
+                <ion-item>
+                    <ion-label>Civilité</ion-label>
+                    <ion-select
+                        placeholder="civilite"
+                        id="civilite"
+                        formControlName="civilite"
+                    >
+                        <ion-select-option value="f">Madame, Mademoiselle</ion-select-option>
+                        <ion-select-option value="m">Monsieur</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Nom</ion-label>
+                    <ion-input
+                        type="text"
+                        placeholder
+                        id="nom"
+                        formControlName="nom"
+                        required
+                    >
+                    </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Prénom</ion-label>
+                    <ion-input
+                        type="text"
+                        placeholder
+                        id="prenom"
+                        formControlName="prenom"
+                        required
+                    >
+                    </ion-input>
+                </ion-item>
+                    <ion-item>
+                        <ion-label>Institutions</ion-label>
+
+                        <ion-select
+                        placeholder="Choix"
+                        id="ecole"
+                        formControlName="ecole"
+                    >
+                            <ion-select-option
+                                *ngFor="let item of school"
+                                [value]="item.value"
+                            >
+                                {{item.value}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Adresse Email</ion-label>
+                        <ion-input
+                            type="text"
+                            placeholder
+                            id="email"
+                            class="form-control"
+                            formControlName="email"
+                        ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Mot de passe</ion-label>
+                        <ion-input
+                            type="password"
+                            placeholder
+                            id="password"
+                            class="form-control"
+                            formControlName="password"
+                        >
+                        </ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Entrer de nouveau le mot de passe</ion-label>
+                        <ion-input
+                            type="password"
+                            placeholder
+                            id="password"
+                            class="form-control"
+                            formControlName="password"
+                        >
+                        </ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Téléphone</ion-label>
+                        <ion-input
+                            type="number"
+                            placeholder
+                            id="gsm"
+                            class="form-control"
+                        >
+                        </ion-input>
+                    </ion-item>
+
+                    <ion-button
+                        expand="block"
+                        color="primary"
+                        ion-button
+                        type="submit"
+                        block
+                    >
+                        Validez votre inscription
+                    </ion-button>
+                </form>
+                <p class="text-danger">{{ errorMessage }}</p>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

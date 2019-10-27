@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1027657211176",
+    "firebase_url": "https://aksmed-c2ca0.firebaseio.com",
+    "project_id": "aksmed-c2ca0",
+    "storage_bucket": "aksmed-c2ca0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027657211176:android:f98a03361310b5f8",
+        "android_client_info": {
+          "package_name": "com.aksmed.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027657211176-mjgcrfph9qh15b6qat0e1ifj8lod6smf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2awTO6kKqYt841eEB3sQ9XbIr_8YE0ps"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

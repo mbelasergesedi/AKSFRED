@@ -1,0 +1,154 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="secondary">
+            <ion-button [routerLink]="['/account']">
+                <ion-icon
+                    slot="icon-only"
+                    name="person"
+                ></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title>Professionels de la santé</ion-title>
+
+        <ion-buttons slot="primary">
+            <ion-button>
+                <ion-icon
+                    slot="icon-only"
+                    name="pin"
+                ></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <ion-icon name="arrow-back"></ion-icon>
+                <a [routerLink]="['/account']">Retour</a>
+            </ion-col>
+
+            <ion-col>
+
+                <ion-col size="12">
+
+                    <ion-label>Professionels de la santé</ion-label>
+                </ion-col>
+
+                <form onsubmit="processForm(event)">
+                    <ion-list
+                        lines="full"
+                        class="ion-no-margin ion-no-padding"
+                    >
+
+                        <ion-item>
+                            <ion-label>Catégorie</ion-label>
+                            <ion-select>
+                                <ion-select-option
+                                    value="01"
+                                    selected
+                                >
+                                    Pharmacien
+                                </ion-select-option>
+                                <ion-select-option value="02">Médecin</ion-select-option>
+                                <ion-select-option value="03">Dentiste</ion-select-option>
+                                <ion-select-option value="04">Kinésitérapheute</ion-select-option>
+                                <ion-select-option value="05">Délégué pharmaceutique</ion-select-option>
+                                <ion-select-option value="06">Infirmier</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">
+                                Numéro d'autorisation (si applicable)
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input
+                                required
+                                type="text"
+                                oninput="handleFirstNameValue(event)"
+                            ></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">
+                                First Name
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input
+                                required
+                                type="text"
+                                oninput="handleFirstNameValue(event)"
+                            ></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label position="stacked">
+                                Last Name
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input
+                                required
+                                type="text"
+                                oninput="handleLastNameValue(event)"
+                            ></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label position="stacked">
+                                Email
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input
+                                required
+                                type="text"
+                                oninput="handleLastNameValue(event)"
+                            ></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">
+                                Entrer de nouveau l'Email
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input
+                                required
+                                type="text"
+                                oninput="handleLastNameValue(event)"
+                            ></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">
+                                Téléphone
+                                <ion-text color="danger">*</ion-text>
+                            </ion-label>
+                            <ion-input
+                                required
+                                type="text"
+                                oninput="handleLastNameValue(event)"
+                            ></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label position="stacked">Localisation</ion-label>
+                            <ion-input placeholder="Ville"></ion-input>
+                        </ion-item>
+
+                    </ion-list>
+
+                    <div class="ion-padding">
+                        <ion-button
+                            expand="block"
+                            type="submit"
+                            class="ion-no-margin"
+                        >
+                            Créer un compte
+                        </ion-button>
+                    </div>
+                </form>
+
+            </ion-col>
+
+        </ion-row>
+
+    </ion-grid>
+</ion-content>

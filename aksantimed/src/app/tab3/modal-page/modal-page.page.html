@@ -1,0 +1,17 @@
+<ion-content padding>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <button ion-button icon-only color='black' (click)="closeModal()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Data From Page : {{ website }}</ion-label>
+      </ion-list-header>
+      <ion-item (click)="settingIonic('Ionic 4')">Ionic</ion-item>
+      <ion-item (click)="settingAngular('Angular 7')">Angular</ion-item>
+      <ion-item (click)="settingJavascript()">Javascript</ion-item>
+    </ion-list>
+  </ion-content>

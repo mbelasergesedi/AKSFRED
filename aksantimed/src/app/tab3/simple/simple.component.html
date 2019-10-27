@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="secondary">
+            <ion-button [routerLink]="['/']">
+                <ion-icon
+                    slot="icon-only"
+                    name="home"
+                ></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title>Recherche simple</ion-title>
+
+        <ion-buttons slot="primary">
+            <ion-button>
+                <ion-icon
+                    slot="icon-only"
+                    name="pin"
+                ></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <ion-icon name="arrow-back"></ion-icon>
+                <a [routerLink]="['/tabs/tab3']">Retour</a>
+            </ion-col>
+            <ion-col size="12">Entrer un terme.</ion-col>
+            <ion-col size="12">
+
+                <ion-note>
+                    Les résultats sont classés par ordre de pertinence de 1 à 0.
+                    <br>
+                    <br>
+                    Vous pouvez rechercher par:
+                       Nom commercial
+                    <br>
+                    DCI: Dénomination Commune Internationale
+                    <br>
+                    ou par code ATC: Anatomique, Thérapeutique et Chimique.
+                </ion-note>
+            </ion-col>
+            <ion-col size="12">
+                <!-- Debut formulaire -->
+                <!-- If user is loaded show the form, else show the loading template -->
+                <form
+                    [formGroup]="form"
+                    (ngSubmit)="submit()"
+                >
+
+                    <ion-item>
+                        <ion-label>Entrer un terme.</ion-label>
+                        <ion-input
+                            type="text"
+                            placeholder
+                            id="votretext"
+                            class="form-control"
+                            formControlName="votretext"
+                        >
+                        </ion-input>
+
+                    </ion-item>
+                    <ion-button
+                        expand="block"
+                        color="primary"
+                        ion-button
+                        type="submit"
+                        block
+                        [disabled]="!form.valid"
+                    >
+                        Recherche
+                    </ion-button>
+                </form>
+                <p [innerHTML]="myResponse"></p>
+                <ng-template #loading>Votre reponse ...</ng-template>
+                <!-- Fin formulaire -->
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+</ion-content>
+<ion-footer></ion-footer>
