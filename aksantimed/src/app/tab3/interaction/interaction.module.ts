@@ -3,12 +3,11 @@ import {HttpClientModule} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
+import { ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { InteractionComponent } from './interaction.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 
 
 @NgModule({
@@ -18,7 +17,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     HttpClientModule,
     Ng2SearchPipeModule,
     ReactiveFormsModule,
-    FormsModule,
     AutocompleteLibModule,
     IonicModule,
     RouterModule.forChild([

@@ -16,6 +16,7 @@ import { Device } from '@ionic-native/device/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import {AlldciService} from './services/alldci.service';
+import {DataService} from './services/item.service';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 import { NotificationsService } from './tab1/notification.service';
@@ -60,6 +61,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
     StatusBar,
     AuthService,
     GaleniqueService,
+    DataService,
     AnatomiqueService,
     TextSearchService,
     NotificationsService,
