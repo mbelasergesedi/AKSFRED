@@ -1,6 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="secondary">
+            <form><ion-icon name="log-out"value="Log in" (click)="authService.logoutUser()"></ion-icon></form> 
             <ion-button [routerLink]="['/']">
                 <ion-icon
                     slot="icon-only"
@@ -11,7 +12,7 @@
         <ion-title>Authentification</ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content padding>
+<ion-content class="ion-padding">
     <form
         class="form"
         [formGroup]="validations_form"
@@ -65,8 +66,11 @@
         >
             Login
         </ion-button>
+        <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.logoutUser()">
         <label class="error-message">{{errorMessage}}</label>
     </form>
+
+    
     <p>Pas encore de compte ?</p>
     <p class="go-to-register">
         <a (click)="goToRegisterPage()">Créer un compte (Professionels).</a>

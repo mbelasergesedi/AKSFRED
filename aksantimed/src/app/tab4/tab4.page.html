@@ -2,26 +2,38 @@
     <ion-toolbar color="primary">
         <ion-buttons slot="secondary">
 
+
             <ion-button [routerLink]="['/login']">
-                <ion-icon slot="icon-only" name="person"></ion-icon>
+                <ion-icon
+                    slot="icon-only"
+                    name="person"
+                ></ion-icon>
             </ion-button>
+
 
         </ion-buttons>
 
+
         <ion-title>Services</ion-title>
+
 
         <ion-buttons slot="primary">
             <ion-button [routerLink]="['/cartographie']">
-                <ion-icon slot="icon-only" name="pin"></ion-icon>
+                <ion-icon
+                    slot="icon-only"
+                    name="pin"
+                ></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
+
 <ion-content fullscreen>
     <ion-grid>
         <ion-row>
             <ion-col size="12">
+                <ion-icon name="book"></ion-icon>
                 <ion-label>Annuaire des professionnels</ion-label>
             </ion-col>
             <ion-col size="12">
@@ -30,10 +42,18 @@
                 </ion-note>
             </ion-col>
             <ion-col>
-                <form class="form" [formGroup]="prof_form" (ngSubmit)="tryRegister(prof_form)">
+                <form
+                    class="form"
+                    [formGroup]="prof_form"
+                    (ngSubmit)="tryRegister(prof_form)"
+                >
                     <ion-item>
                         <ion-label>Catégorie</ion-label>
-                        <ion-select placeholder="categorie" id="categorie" formControlName="categorie">
+                        <ion-select
+                            placeholder="categorie"
+                            id="categorie"
+                            formControlName="categorie"
+                        >
                             <ion-select-option>Medecin</ion-select-option>
                             <ion-select-option selected>Pharmacien</ion-select-option>
                             <ion-select-option>Dentiste</ion-select-option>
@@ -44,15 +64,31 @@
                     </ion-item>
                     <ion-item>
                         <ion-label>Nom</ion-label>
-                        <ion-input type="text" placeholder id="nom" formControlName="nom" required></ion-input>
+                        <ion-input
+                            type="text"
+                            placeholder
+                            id="nom"
+                            formControlName="nom"
+                            required
+                        ></ion-input>
                     </ion-item>
 
-                    <ion-button expand="block" color="primary" class="submit-btn" type="submit"
-                        [disabled]="!prof_form.valid">
+
+                    <ion-button
+                        expand="block"
+                        color="primary"
+                        class="submit-btn"
+                        type="submit"
+                        [disabled]="!prof_form.valid"
+                    >
                         Recherchez
                     </ion-button>
                 </form>
-                <ion-col size="12" *ngFor="let item of enregistrement">
+                <ion-col
+                    size="12"
+                    *ngFor="let item of enregistrement"
+                >
+
 
                     <ion-row>
                         <ion-col>
@@ -81,6 +117,7 @@
                 <ion-col size="12"></ion-col>
             </ion-col>
             <ion-col size="12">
+                <ion-icon name="hand"></ion-icon>
                 <ion-label>Anomalie/Signalement</ion-label>
             </ion-col>
             <ion-col size="12">
@@ -89,44 +126,78 @@
                 </ion-note>
             </ion-col>
 
+
             <ion-col size="12">
                 <ion-item>
                     <ion-label>Médicament</ion-label>
-                    <ion-input type="text" placeholder id="nom"></ion-input>
+                    <ion-input
+                        type="text"
+                        placeholder
+                        id="nom"
+                    ></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Ville</ion-label>
 
-                    <ion-select placeholder="Choix" id="ville">
-                        <ion-select-option *ngFor="let item of ville" [value]="item.value">
+
+                    <ion-select
+                        placeholder="Choix"
+                        id="ville"
+                    >
+                        <ion-select-option
+                            *ngFor="let item of ville"
+                            [value]="item.value"
+                        >
                             {{item.value}}
                         </ion-select-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
                     <ion-label>Téléphone</ion-label>
-                    <ion-input type="text" placeholder id="telephone" placeholder="Gsm..."></ion-input>
+                    <ion-input
+                        type="text"
+                        placeholder
+                        id="telephone"
+                        placeholder="Gsm..."
+                    ></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-button (click)="pickImage()">Télécharger une image</ion-button>
+
+
+                    <ion-icon
+                        name="camera"
+                        (click)="pickImage()"
+                    ></ion-icon>
+                    Prendre une photo
                 </ion-item>
                 <ion-item>
                     <ion-label>Message</ion-label>
-                    <ion-textarea rows="6" cols="20" placeholder="Entrer votre message ici..."></ion-textarea>
+                    <ion-textarea
+                        rows="6"
+                        cols="20"
+                        placeholder="Entrer votre message ici..."
+                    ></ion-textarea>
                 </ion-item>
 
-                <ion-button expand="block" color="primary" class="submit-btn" type="submit">
+
+                <ion-button
+                    expand="block"
+                    color="primary"
+                    class="submit-btn"
+                    type="submit"
+                >
                     Postez votre message
                 </ion-button>
             </ion-col>
-            <ion-col size="12">
+            <!-- <ion-col size="12">
                 <ion-label>Signalement dans votre région</ion-label>
-            </ion-col>
+            </ion-col> 
             <ion-col size="12">
                 <ion-note>
                     Consulter la liste des produits signalés suspects dans votre région.
                 </ion-note>
             </ion-col>
+           
             <ion-col size="12">
 
                 <ion-item>
@@ -142,7 +213,7 @@
                 <ion-button expand="block" color="primary" class="submit-btn" type="submit">
                     Postez votre message
                 </ion-button>
-            </ion-col>
+            </ion-col> -->
         </ion-row>
     </ion-grid>
     <!-- <h3

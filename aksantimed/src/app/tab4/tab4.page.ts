@@ -27,8 +27,6 @@ export class Tab4Page {
   prof_form: FormGroup;
 
   errorMessage = '';
-
-
   enr: any;
   itemCollection: any;
   MyData: any;
@@ -41,21 +39,21 @@ export class Tab4Page {
   successMessage: string;
 
   constructor(private formBuilder: FormBuilder,
-    private authenticateService: AuthenticateService,
-    private schoolsService: SchoolsService,
-    private villeService: VilleService,
-    private db: AngularFirestore,
-    private camera: Camera,
-    private file: File,
-    private qryCustomerService: QryCustomerService,
-    private router: Router) {
+              private authenticateService: AuthenticateService,
+              private schoolsService: SchoolsService,
+              private villeService: VilleService,
+              private db: AngularFirestore,
+              private camera: Camera,
+              private file: File,
+              private qryCustomerService: QryCustomerService,
+              private router: Router) {
 
   }
   // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
     this.initForm();
     this.getVille();
-    firebase.initializeApp(environment.firebase);
+    //firebase.initializeApp(environment.firebase);
   }
 
   async pickImage() {
@@ -79,6 +77,7 @@ export class Tab4Page {
   }
 
   // FILE STUFF
+  // tslint:disable-next-line: variable-name
   makeFileIntoBlob(_imagePath: string) {
     // INSTALL PLUGIN - cordova plugin add cordova-plugin-file
     return new Promise((resolve, reject) => {
@@ -116,6 +115,7 @@ export class Tab4Page {
 
   /**
    *
+   // tslint:disable-next-line: jsdoc-format
    // tslint:disable-next-line: no-redundant-jsdoc
    * @param _imageBlobInfo
    */

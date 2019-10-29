@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     maxResults: 5
   };
   device: any;
+  logged: boolean;
   constructor(
 
     private navCtrl: NavController,
@@ -100,10 +101,17 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(value)
       .then(res => {
         this.errorMessage = '';
+        this.logged = true;
         this.navCtrl.navigateForward('tabs/tab1');
       }, err => {
         this.errorMessage = err.message;
       });
+  }
+  logoutUser() {
+    return this.authService.logoutUser().then(() => {
+      this.logged = false;
+      this.navCtrl.navigateForward('tabs/tab1');
+    });
   }
 
   goToRegisterPage() {
