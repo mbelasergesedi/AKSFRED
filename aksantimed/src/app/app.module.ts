@@ -15,8 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Device } from '@ionic-native/device/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-import {AlldciService} from './services/alldci.service';
-import {DataService} from './services/item.service';
+import { AlldciService } from './services/alldci.service';
+import { DataService } from './services/item.service';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 import { NotificationsService } from './tab1/notification.service';
@@ -27,7 +27,7 @@ import { DciSearch } from './services/dci.service';
 import { VilleService } from './services/city.service';
 import { GaleniqueService } from './services/galenique.service';
 import { AnatomiqueService } from './services/anatomique.service';
-import {QryCustomerService} from './services/customers.service';
+import { QryCustomerService } from './services/customers.service';
 
 import { InteractionSearch } from './services/interaction.service';
 import { InteractionComponent } from './tab3/interaction/interaction.component';
@@ -43,6 +43,8 @@ import { Firebase } from '@ionic-native/firebase/ngx';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -79,6 +81,8 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
     VilleService,
     AlldciService,
     AngularFireDatabase,
+    Camera,
+    File,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
