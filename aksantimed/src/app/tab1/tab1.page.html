@@ -2,144 +2,170 @@
     <ion-toolbar color="primary">
         <ion-buttons slot="secondary">
             <ion-button [routerLink]="['/login']">
-                <ion-icon
-                    slot="icon-only"
-                    name="person"
-                ></ion-icon>
+                <ion-icon slot="icon-only" name="person"></ion-icon>
             </ion-button>
         </ion-buttons>
-
         <ion-title>Accueil</ion-title>
-
         <ion-buttons slot="primary">
             <ion-button [routerLink]="['/cartographie']">
-                <ion-icon
-                    slot="icon-only"
-                    name="pin"
-                ></ion-icon>
+                <ion-icon slot="icon-only" name="pin"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
-<ion-content>
+<ion-content padding="true">
     <ion-grid>
         <ion-row>
+            <ion-col size="12">
+                <div *ngIf="this.status =='OFFLINE'">Vous n'êtes pas connecté à Internet {{this.status}}</div>
+                <div *ngIf="!this.userEmail">
+                    <ion-button [routerLink]="['/login']" expand="block">
+                        <ion-icon name="body"></ion-icon> Authentifiez-vous
+                    </ion-button>
+                    <ion-note>L'accès à certaines fonctionalités requiert que vous soyez authentifié.</ion-note>
 
-            {{this.userEmail}}{{this.logged}}
-                <span *ngIf="this.logged==='false'">Bienvenue: {{this.userEmail}}</span>
-          
-            <ion-col
-                size="12"
-                *ngFor="let item of interactions"
-            >
-                <span *ngIf="item.titre==='Retrait médicament'">
-                    <ion-icon
-                        name="notifications-outline"
-                        color="danger"
-                    ></ion-icon>
+                </div>
+                <br>
+                <ion-note>
+                    <div *ngIf="this.userEmail">
+                        <span>Bienvenue {{this.userEmail}}</span>                      
+                        <ion-button [routerLink]="['/updatemydata']" [queryParams]="this.userEmail"  expand="block">
+                            <ion-icon name="md-done-all"></ion-icon> Modifier vos données
+                        </ion-button>
+                    </div>
+                </ion-note>
+                <br>
+            </ion-col>
+            <ion-col size="12" *ngFor="let item of interactions">
+                <span *ngIf="item.categorie==='Alerte'">
                 </span>
-                <span *ngIf="item.titre!='Retrait médicament'">
-                    <ion-icon
-                        name="notifications-outline"
-                        color="warning"
-                    ></ion-icon>
-                </span>
+
                 <ion-label>
                     <strong>{{item.titre}}</strong>
                     <br>
                 </ion-label>
-                <h6
-                    ion-text
-                    color="light"
-                >
+                <h6 ion-text color="light">
                     {{item.dateposte}}
                 </h6>
-                <span *ngIf="item.titre==='Retrait médicament'">
-                    <ion-badge
-                        color="danger"
-                        slot="end"
-                    >
+                <span *ngIf="item.categorie==='Alerte'">
+                    <ion-badge color="danger" slot="end">
                         Alerte
                     </ion-badge>
                 </span>
                 <ion-col size="12">
                     <ion-label>
-                        {{item.description}}
+                        {{ item.description }}
                         <br>
                     </ion-label>
                 </ion-col>
             </ion-col>
-            <ion-col size="12">
-                <ion-icon name="logo-facebook"></ion-icon>
-                Facebook
-                <ion-icon name="logo-twitter"></ion-icon>
-                Twitter
-                <ion-icon name="logo-whatsapp"></ion-icon>
-                Whatsapp
-            </ion-col>
+
             <ion-col size="12">
                 <ion-content fullscreen>
                     <ion-list>
                         <ion-list-header>Informations</ion-list-header>
+
+                        <ion-item>
+
+                            <ion-label>
+                                <a [routerLink]="['/infos']" [queryParams]="ObjNouvelles">
+                                    Nouvelles
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Alertes -->
                         <ion-item>
                             <ion-label>
-                                La RDC et ses partenaires mobilisent 579 millions USD pour lutter contre Ebola Au total, 2 877
-                  cas ont été
-                  enregistrés depuis le début de l’épidémie il y a un an, dont 1 934 décès.
-                            </ion-label>
-                            <ion-badge slot="end">22k</ion-badge>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>Ordre des pharmaciens</ion-label>
-                            <ion-badge
-                                color="secondary"
-                                slot="end"
-                            >
-                                118k
-                            </ion-badge>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>Ordre des médecins</ion-label>
-                            <ion-badge
-                                color="tertiary"
-                                slot="end"
-                            >
-                                34k
-                            </ion-badge>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>Ordre des dentistes</ion-label>
-                            <ion-badge
-                                color="success"
-                                slot="end"
-                            >
-                                80
-                            </ion-badge>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>Fermeture de pharmacie</ion-label>
-                            <ion-badge
-                                color="warning"
-                                slot="end"
-                            >
-                                70
-                            </ion-badge>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>Retrait produit</ion-label>
-                            <ion-badge
-                                color="danger"
-                                slot="end"
-                            >
-                                1000
-                            </ion-badge>
-                        </ion-item>
 
+                                <a [routerLink]="['/infos']" [queryParams]="ObjAlertes">
+                                    Alertes
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Ordre des pharmaciens -->
+                        <ion-item>
+                            <ion-label>
+
+                                <a [routerLink]="['/infos']" [queryParams]="ObjOpharmaciens">
+                                    Ordre des pharmaciens
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Fermeture pharmacie -->
+                        <ion-item>
+                            <ion-label>
+
+                                <a [routerLink]="['/infos']" [queryParams]="ObjClosePharma">
+                                    Fermeture pharmacie
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Retrait produit -->
+                        <ion-item>
+                            <ion-label>
+
+                                <a [routerLink]="['/infos']" [queryParams]="ObjRetiredPharma">
+                                    Retrait produit
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Ordre des médecins -->
+                        <ion-item>
+                            <ion-label>
+
+                                <a [routerLink]="['/infos']" [queryParams]="ObjOrdMedecins">
+                                    Ordre des médecins
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Ordre des dentistes -->
+                        <ion-item>
+                            <ion-label>
+
+                                <a [routerLink]="['/infos']" [queryParams]="ObjOrdDentistes">
+                                    Ordre des dentistes
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Ordre des kinésitérapheutes -->
+                        <ion-item>
+                            <ion-label>
+                                <a [routerLink]="['/infos']" [queryParams]="ObjOrdKine">
+                                    Ordre des kinésitérapheutes
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Ordre des tradi -->
+                        <ion-item>
+                            <ion-label>
+
+                                <a [routerLink]="['/infos']" [queryParams]="ObjOrdTradi">
+                                    Ordre des tradi praticiens
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
+                        <!-- Ordre des infirmiers -->
+                        <ion-item>
+                            <ion-label>
+
+                                <a [routerLink]="['/infos']" [queryParams]="ObjOrdInfis">
+                                    Ordre des infirmiers
+                                </a>
+                            </ion-label>
+
+                        </ion-item>
                     </ion-list>
                 </ion-content>
             </ion-col>
-
             <ion-col size="12"></ion-col>
         </ion-row>
     </ion-grid>

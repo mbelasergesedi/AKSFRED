@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthenticateService } from '../services/authentication.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SchoolsService } from '../services/school.service';
 import { VilleService } from '../services/city.service';
-import { QryCustomerService } from '../services/customers.service';
-import { FormsModule } from '@angular/forms';
+import { QrySignalementService } from '../services/signalement.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Customers } from '../model/customers.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
-
-import { environment } from '../environments/environment';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { ToastController } from '@ionic/angular';
 import * as firebase from 'firebase';
 @Component({
   selector: 'app-tab4',
@@ -22,9 +20,11 @@ import * as firebase from 'firebase';
   styleUrls: ['./tab4.page.scss'],
 })
 export class Tab4Page {
+  // tslint:disable-next-line: variable-name
+  signalement_form: FormGroup;
   result;
-
-  prof_form: FormGroup;
+  latitude: any;
+  longitude: any;
 
   errorMessage = '';
   enr: any;
@@ -34,18 +34,21 @@ export class Tab4Page {
   enregistrement: any;
   [x: string]: any;
   list: Customers[];
-  signupForm: FormGroup;
 
+  progress: number;
+  imageDoc: string;
   successMessage: string;
 
   constructor(private formBuilder: FormBuilder,
               private authenticateService: AuthenticateService,
-              private schoolsService: SchoolsService,
               private villeService: VilleService,
               private db: AngularFirestore,
               private camera: Camera,
+              private geolocation: Geolocation,
+              private uniqueDeviceID: UniqueDeviceID,
               private file: File,
-              private qryCustomerService: QryCustomerService,
+              private toastController: ToastController,
+              private qrySignalementService: QrySignalementService,
               private router: Router) {
 
   }
@@ -53,9 +56,22 @@ export class Tab4Page {
   ngOnInit() {
     this.initForm();
     this.getVille();
-    //firebase.initializeApp(environment.firebase);
-  }
 
+    this.geolocation.getCurrentPosition().then((resp) => {
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+
+    const watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+      // console.log(data.coords.latitude);
+      this.latitude = data.coords.latitude;
+      // console.log(data.coords.longitude);
+      this.longitude = data.coords.longitude;
+      this.cordonnees = this.latitude;
+     // console.log(this.cordonnees);
+    });
+  }
   async pickImage() {
     const options: CameraOptions = {
       quality: 80,
@@ -68,11 +84,8 @@ export class Tab4Page {
       const cameraInfo = await this.camera.getPicture(options);
       const blobInfo = await this.makeFileIntoBlob(cameraInfo);
       const uploadInfo: any = await this.uploadToFirebase(blobInfo);
-
-      alert('File Upload Success ' + uploadInfo.fileName);
     } catch (e) {
-      console.log(e.message);
-      alert('File Upload Error ' + e.message);
+      // console.log(e.message);
     }
   }
 
@@ -81,7 +94,7 @@ export class Tab4Page {
   makeFileIntoBlob(_imagePath: string) {
     // INSTALL PLUGIN - cordova plugin add cordova-plugin-file
     return new Promise((resolve, reject) => {
-      let fileName = "";
+      let fileName = '';
       this.file
         .resolveLocalFilesystemUrl(_imagePath)
         .then(fileEntry => {
@@ -89,10 +102,11 @@ export class Tab4Page {
 
           // get the path..
           const path = nativeURL.substring(0, nativeURL.lastIndexOf('/'));
-          console.log('path', path);
-          console.log('fileName', name);
+          // console.log('path', path);
+          // console.log('fileName', name);
 
           fileName = name;
+          this.imageDoc = fileName;
 
           // we are provided the name, so now read the file into
           // a buffer
@@ -106,7 +120,7 @@ export class Tab4Page {
           console.log(imgBlob.type, imgBlob.size);
           resolve({
             fileName,
-            imgBlob
+            imgBlob,
           });
         })
         .catch(e => reject(e));
@@ -117,9 +131,11 @@ export class Tab4Page {
    *
    // tslint:disable-next-line: jsdoc-format
    // tslint:disable-next-line: no-redundant-jsdoc
+   // tslint:disable-next-line: no-redundant-jsdoc
    * @param _imageBlobInfo
    */
   uploadToFirebase(_imageBlobInfo) {
+
     console.log('uploadToFirebase');
     return new Promise((resolve, reject) => {
       const fileRef = firebase.storage().ref('images/' + _imageBlobInfo.fileName);
@@ -131,12 +147,15 @@ export class Tab4Page {
         // tslint:disable-next-line: variable-name
         (_snapshot: any) => {
           console.log(
-            'snapshot progess ' +
+            'snapshot progress ' +
             (_snapshot.bytesTransferred / _snapshot.totalBytes) * 100
           );
+          this.progress = (_snapshot.bytesTransferred / _snapshot.totalBytes) * 100;
+
         },
+        // tslint:disable-next-line: variable-name
         _error => {
-          console.log(_error);
+          //console.log(_error);
           reject(_error);
         },
         () => {
@@ -157,48 +176,58 @@ export class Tab4Page {
     ).subscribe(ville => {
       this.villeRef = ville;
       this.ville = ville;
-      console.log(this.ville);
+
     });
   }
   initForm() {
-    // Validations patterns
+    // Validations patterns Signalement
+    this.signalement_form = this.formBuilder.group({
+      medicament: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      ville: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      description: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+
+      telephone: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+      ])),
+    });
+
+
+    // Validations patterns ListProf
     this.prof_form = this.formBuilder.group({
       nom: new FormControl('', Validators.compose([
-        Validators.required
       ])),
       categorie: new FormControl('', Validators.compose([
-        Validators.required
+        Validators.required,
       ])),
-
-
     });
+
   }
   tryRegister() {
     const data = this.prof_form.value;
-    // 1. On cherche si l'email de l'utilisateur est déjà présent dans la DB;
-    console.log(this.prof_form.get('categorie').value);
     this.itemCollection = this.db.collection<any[]>('customers', ref => ref.where('profession', '==',
       this.prof_form.get('categorie').value));
     this.items = this.itemCollection.valueChanges().subscribe((val: any) => {
       this.enregistrement = val;
-      // console.log(this.enregistrement);
-
-      // 2. S'il n'est pas présent, on l'inscrit dans la DB et dans système d'authentification;
-      //if (Object.keys(this.enregistrement).length === 0) {
-      //  this.qryCustomerService.createCustomer(data);
-      //// this.authenticateService.registerUser(this.prof_form.get('email').value, this.prof_form.get('password').value)
-      ////  .then(res => {
-      //  console.log(res);
-      ///  this.errorMessage = '';
-      ///  this.successMessage = 'Votre compte a été crée.';
-      //}, err => {
-      //console.log(err);
-      ///  this.errorMessage = err.message;
-      ///  this.successMessage = '';
-      // });
-      // 3. Sinon on le previent qu'il est déjà présent dans la DB;
-      //} else { console.log('Utilisateur déjà présent'); }
     }
     );
+  }
+
+  async Signalement() {
+    const data = this.signalement_form.value;
+    console.log(data);
+    this.qrySignalementService.signalmentCreate(data);
+    const toast = await this.toastController.create({
+      message: 'Vous signalement a été envoyé.',
+      duration: 4000
+    });
+    toast.present();
+    this.navCtrl.navigateForward('tabs/tab1');
   }
 }

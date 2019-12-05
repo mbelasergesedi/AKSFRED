@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Notification } from './notification.model';
 import { Tab1Page } from './tab1.page';
 
@@ -10,6 +10,7 @@ import { DataSnapshot } from '@angular/fire/database/interfaces';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 @Injectable()
 export class NotificationsService {
+  items: Observable<[any]>;
   private dbPath = '/notifications';
   notificationsRef: AngularFireList<Tab1Page>;
 
@@ -30,13 +31,18 @@ export class NotificationsService {
 
 
   getNotifications() {
-    firebase.database().ref('/notifications')
+    firebase.database().ref('/categories')
       .on('value', (data: DataSnapshot) => {
         this.notifications = data.val() ? data.val() : [];
         this.emitNotifications();
       }
       );
   }
+
+  getCategorieNotification(categorie: string): Observable<Notification> {
+    return this.db.object<Notification>('/notifications/{categorie}')
+    .valueChanges();
+}
 
   getNotification(): AngularFireList<Tab1Page> {
     return this.notificationsRef;

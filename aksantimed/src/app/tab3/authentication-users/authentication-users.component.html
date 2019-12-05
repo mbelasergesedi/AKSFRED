@@ -2,10 +2,7 @@
     <ion-toolbar color="primary">
         <ion-buttons slot="secondary">
             <ion-button [routerLink]="['/account']">
-                <ion-icon
-                    slot="icon-only"
-                    name="person"
-                ></ion-icon>
+                <ion-icon slot="icon-only" name="person"></ion-icon>
             </ion-button>
         </ion-buttons>
 
@@ -13,10 +10,7 @@
 
         <ion-buttons slot="primary">
             <ion-button>
-                <ion-icon
-                    slot="icon-only"
-                    name="pin"
-                ></ion-icon>
+                <ion-icon slot="icon-only" name="pin"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -31,25 +25,16 @@
             </ion-col>
 
             <ion-col>
-
                 <ion-col size="12">
-
                     <ion-label>Professionels de la santé</ion-label>
                 </ion-col>
 
                 <form onsubmit="processForm(event)">
-                    <ion-list
-                        lines="full"
-                        class="ion-no-margin ion-no-padding"
-                    >
-
+                    <ion-list lines="full" class="ion-no-margin ion-no-padding">
                         <ion-item>
                             <ion-label>Catégorie</ion-label>
                             <ion-select>
-                                <ion-select-option
-                                    value="01"
-                                    selected
-                                >
+                                <ion-select-option value="01" selected>
                                     Pharmacien
                                 </ion-select-option>
                                 <ion-select-option value="02">Médecin</ion-select-option>
@@ -64,22 +49,14 @@
                                 Numéro d'autorisation (si applicable)
                                 <ion-text color="danger">*</ion-text>
                             </ion-label>
-                            <ion-input
-                                required
-                                type="text"
-                                oninput="handleFirstNameValue(event)"
-                            ></ion-input>
+                            <ion-input required type="text" oninput="handleFirstNameValue(event)"></ion-input>
                         </ion-item>
                         <ion-item>
                             <ion-label position="stacked">
                                 First Name
                                 <ion-text color="danger">*</ion-text>
                             </ion-label>
-                            <ion-input
-                                required
-                                type="text"
-                                oninput="handleFirstNameValue(event)"
-                            ></ion-input>
+                            <ion-input required type="text" oninput="handleFirstNameValue(event)"></ion-input>
                         </ion-item>
 
                         <ion-item>
@@ -87,68 +64,41 @@
                                 Last Name
                                 <ion-text color="danger">*</ion-text>
                             </ion-label>
-                            <ion-input
-                                required
-                                type="text"
-                                oninput="handleLastNameValue(event)"
-                            ></ion-input>
+                            <ion-input required type="text" oninput="handleLastNameValue(event)"></ion-input>
                         </ion-item>
-
                         <ion-item>
                             <ion-label position="stacked">
                                 Email
                                 <ion-text color="danger">*</ion-text>
                             </ion-label>
-                            <ion-input
-                                required
-                                type="text"
-                                oninput="handleLastNameValue(event)"
-                            ></ion-input>
+                            <ion-input required type="text" oninput="handleLastNameValue(event)"></ion-input>
                         </ion-item>
                         <ion-item>
                             <ion-label position="stacked">
                                 Entrer de nouveau l'Email
                                 <ion-text color="danger">*</ion-text>
                             </ion-label>
-                            <ion-input
-                                required
-                                type="text"
-                                oninput="handleLastNameValue(event)"
-                            ></ion-input>
+                            <ion-input required type="text" oninput="handleLastNameValue(event)"></ion-input>
                         </ion-item>
                         <ion-item>
                             <ion-label position="stacked">
                                 Téléphone
                                 <ion-text color="danger">*</ion-text>
                             </ion-label>
-                            <ion-input
-                                required
-                                type="text"
-                                oninput="handleLastNameValue(event)"
-                            ></ion-input>
+                            <ion-input required type="text" oninput="handleLastNameValue(event)"></ion-input>
                         </ion-item>
-
                         <ion-item>
                             <ion-label position="stacked">Localisation</ion-label>
                             <ion-input placeholder="Ville"></ion-input>
                         </ion-item>
-
                     </ion-list>
-
                     <div class="ion-padding">
-                        <ion-button
-                            expand="block"
-                            type="submit"
-                            class="ion-no-margin"
-                        >
+                        <ion-button expand="block" type="submit" class="ion-no-margin">
                             Créer un compte
                         </ion-button>
                     </div>
                 </form>
-
             </ion-col>
-
         </ion-row>
-
     </ion-grid>
 </ion-content>

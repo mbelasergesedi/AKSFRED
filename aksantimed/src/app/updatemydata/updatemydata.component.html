@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="secondary">
+      <ion-button [routerLink]="['/']">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Mise à jour de vos données</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon slot="icon-only" name="pin"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-icon name="arrow-back"></ion-icon>
+        <a [routerLink]="['/login']">Retour</a>
+      </ion-col>
+      <ion-col size="12">Mise à jour de vos données</ion-col>
+      <ion-col size="12">
+        <ion-note>
+          Modifier vos données.<br />
+        </ion-note>
+      </ion-col>
+      <ion-col>
+        <form class="form" [formGroup]="updateDataform" (ngSubmit)="updateRegister(updateDataform.value)">
+          <ion-item>
+            <ion-label>Nom</ion-label>
+            <ion-input type="text" placeholder id="nom" formControlName="nom" requiredaria-readonly="true"
+              value="{{ this.nom }}">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Prénom</ion-label>
+            <ion-input type="text" placeholder id="prenom" formControlName="prenom" required aria-readonly="true"
+              value="{{ this.prenom }}">
+            </ion-input>
+            <ion-input type="hidden" placeholder id="email" formControlName="email" requireda aria-readonly="true"
+              value="{{ this.userEmail }}">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Téléphone</ion-label>
+            <ion-input type="number" placeholder id="gsm" formControlName="gsm" value="{{ this.gsm }}">
+            </ion-input>
+          </ion-item>
+
+          <ion-button expand="block" color="primary" ion-button type="submit" block>
+            Mettre à jour
+          </ion-button>
+        </form>
+        <p class="text-danger">{{ errorMessage }}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer></ion-footer>

@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthService {
+    userState: any;
         createNewUser(email: string, password: string) {
             return new Promise(
                 (resolve, reject) => {
@@ -25,6 +26,7 @@ export class AuthService {
                 firebase.auth().signInWithEmailAndPassword(email, password).then(
                     () => {
                         resolve();
+                        localStorage.setItem('email', JSON.stringify(this.userState));
                     },
                     (error) => {
                         reject(error);
@@ -38,7 +40,7 @@ export class AuthService {
         firebase.auth().signOut();
     }
 
-    userDetails(){
+    userDetails() {
         return firebase.auth().currentUser;
       }
 

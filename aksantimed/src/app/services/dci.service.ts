@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DciSearch {
 
-  private dbPath = '/dci';
+  private dbPath = '/adci';
 
   dciRef: AngularFireList<InteractionComponent> = null;
 

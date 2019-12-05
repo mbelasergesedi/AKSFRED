@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
+import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class QryCustomerService {
 
@@ -39,7 +40,7 @@ export class QryCustomerService {
     return this.firestore
       .collection('customers')
       .doc(data.payload.doc.id)
-      .set({ completed: true }, { merge: true });
+      .set({ completed: false }, { merge: false });
   }
 
   getCustomer() {

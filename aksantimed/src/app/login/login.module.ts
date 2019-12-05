@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-// tslint:disable-next-line: import-spacing
 import { LoginComponent } from './login.component';
 
 @NgModule({

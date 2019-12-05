@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 import { DciSearch } from '../../services/dci.service';
 import { InteractionSearch } from '../../services/interaction.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
-import {AlldciService} from '../../services/alldci.service';
+import { AlldciService } from '../../services/alldci.service';
 
 @Component({
   selector: 'app-interaction',
@@ -23,9 +23,9 @@ export class InteractionComponent implements OnInit {
   DciCollection: any;
 
   constructor(private dciSearch: DciSearch, private interactionSearch: InteractionSearch,
-              private formBuilder: FormBuilder,
-              private alldciService: AlldciService,
-              private db: AngularFirestore) {
+    private formBuilder: FormBuilder,
+    private alldciService: AlldciService,
+    private db: AngularFirestore) {
     this.reactiveForm = formBuilder.group({
       name: ['', Validators.required]
     });
@@ -53,26 +53,11 @@ export class InteractionComponent implements OnInit {
   save_outage_index() {
   }
   ngOnInit() {
-    this.geDciList();
-    this.getInteraction();
-    this.geInteractionList();
-    this.getAlldci();
-    this.DciCollection();
+    this.getDci();
   }
 
-  getAlldci = () =>
-  this.alldciService
-  .getAlldci()
-  .subscribe(res => {
-    this.coffeeOrders = res;
-    this.res = res;
-    console.log(this.res);
-  })
-
-
-
-  geDciList() {
-    this.dciSearch.getDci().snapshotChanges().pipe(
+  getDci() {
+    this.dciSearch.getDci().snapshotChanges().pipe(debounceTime(500),
       map(changes =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
@@ -83,34 +68,34 @@ export class InteractionComponent implements OnInit {
       this.dci = dci;
     });
   }
-  
 
-  getInteraction() {
-    this.interactionSearch.getInteraction().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(interactions => {
-      this.interactionRef = interactions;
-      this.interaction = interactions;
-    });
 
-  }
-  geInteractionList() {
-    this.interactionSearch.geInteractionList(this.code).snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(interactions => {
-      this.interactionRef = interactions;
-      this.interaction = interactions;
-    });
+  // getInteraction() {
+  //  this.interactionSearch.getInteraction().snapshotChanges().pipe(
+  //    map(changes =>
+  //      changes.map(c =>
+  //        ({ key: c.payload.key, ...c.payload.val() })
+  //      )
+  //    )
+  //  ).subscribe(interactions => {
+  //    this.interactionRef = interactions;
+  //    this.interaction = interactions;
+  //  });
 
-  }
+  //}
+  // geInteractionList() {
+  // this.interactionSearch.geInteractionList(this.code).snapshotChanges().pipe(
+  //   map(changes =>
+  //     changes.map(c =>
+  //       ({ key: c.payload.key, ...c.payload.val() })
+  //      )
+  //    )
+  //  ).subscribe(interactions => {
+  //    this.interactionRef = interactions;
+  //    this.interaction = interactions;
+  //  });
+
+  // }
 
   submitReactiveForm() {
     if (this.reactiveForm.valid) {
@@ -121,7 +106,7 @@ export class InteractionComponent implements OnInit {
 
       this.items = this.itemCollection.valueChanges().subscribe((val: any) => {
         this.inter = val;
-        //console.log(this.inter);
+        // console.log(this.inter);
       }
 
       );
@@ -130,4 +115,6 @@ export class InteractionComponent implements OnInit {
 
   }
 }
+
+
 

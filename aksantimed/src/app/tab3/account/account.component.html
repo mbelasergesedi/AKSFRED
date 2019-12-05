@@ -2,29 +2,19 @@
     <ion-toolbar color="primary">
         <ion-buttons slot="secondary">
             <ion-button [routerLink]="['/login']">
-                <ion-icon
-                    slot="icon-only"
-                    name="person"
-                ></ion-icon>
+                <ion-icon slot="icon-only" name="person"></ion-icon>
             </ion-button>
         </ion-buttons>
-
         <ion-title>Professionels</ion-title>
-
         <ion-buttons slot="primary">
             <ion-button [routerLink]="['/cartographie']">
-                <ion-icon
-                    slot="icon-only"
-                    name="pin"
-                ></ion-icon>
+                <ion-icon slot="icon-only" name="pin"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
-<ion-content>
+<ion-content padding="true">
     <ion-grid>
-
         <ion-row>
             <ion-col size="12">
                 <ion-icon name="arrow-back"></ion-icon>
@@ -32,60 +22,27 @@
             </ion-col>
             <ion-col size="12">Inscrivez-vous</ion-col>
             <ion-col size="12">
-                <ion-note>
-                    Les renseignements fournis sont validés par les autorités compétentes.
-                    <br>
-                    L'inscription aux services Aksantimed est reservée aux professionnels de la santé.
-                    <br>
-                </ion-note>
-            </ion-col>
-            <ion-col>
-
-                <form
-                    class="form"
-                    [formGroup]="account_form"
-                    (ngSubmit)="tryRegister(account_form)"
-                >
+                <form class="form" [formGroup]="account_form" (ngSubmit)="tryRegister(account_form.value)">
                     <ion-item>
                         <ion-label>Civilité</ion-label>
-                        <ion-select
-                            placeholder="civilite"
-                            id="civilite"
-                            formControlName="civilite"
-                        >
+                        <ion-select placeholder="civilite" id="civilite" formControlName="civilite">
                             <ion-select-option value="f">Madame, Mademoiselle</ion-select-option>
                             <ion-select-option value="m">Monsieur</ion-select-option>
                         </ion-select>
                     </ion-item>
                     <ion-item>
                         <ion-label>Nom</ion-label>
-                        <ion-input
-                            type="text"
-                            placeholder
-                            id="nom"
-                            formControlName="nom"
-                            required
-                        >
+                        <ion-input type="text" placeholder id="nom" formControlName="nom" required>
                         </ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>Prénom</ion-label>
-                        <ion-input
-                            type="text"
-                            placeholder
-                            id="prenom"
-                            formControlName="prenom"
-                            required
-                        >
+                        <ion-input type="text" placeholder id="prenom" formControlName="prenom" required>
                         </ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>Profession / Occupation</ion-label>
-                        <ion-select
-                            placeholder="Choix"
-                            id="profession"
-                            formControlName="profession"
-                        >
+                        <ion-select placeholder="Choix" id="profession" formControlName="profession">
                             <ion-select-option value="Pharmacien">Pharmacien</ion-select-option>
                             <ion-select-option value="Medecin">Medecin</ion-select-option>
                             <ion-select-option value="Dentiste">Dentiste</ion-select-option>
@@ -95,125 +52,44 @@
                     </ion-item>
                     <ion-item>
                         <ion-label>Ville</ion-label>
-
-                        <ion-select
-                            placeholder="Choix"
-                            id="ville"
-                            formControlName="ville"
-                        >
-                            <ion-select-option
-                                *ngFor="let item of ville"
-                                [value]="item.value"
-                            >
+                        <ion-select placeholder="Choix" id="ville" formControlName="ville">
+                            <ion-select-option *ngFor="let item of ville" [value]="item.value">
                                 {{item.value}}
                             </ion-select-option>
                         </ion-select>
                     </ion-item>
                     <ion-item>
                         <ion-label>Structure</ion-label>
-                        <ion-select
-                            placeholder="Choix"
-                            id="structure"
-                            formControlName="structure"
-                        >
+                        <ion-select placeholder="Choix" id="structure" formControlName="structure">
                             <ion-select-option value="Pharmacie">Pharmacie</ion-select-option>
                             <ion-select-option value="Hopital/Clinique">Hopital/Clinique</ion-select-option>
-                            <ion-select-option value="Industrie pharmaceutique">Industrie pharmaceutique</ion-select-option>
+                            <ion-select-option value="Industrie pharmaceutique">Industrie pharmaceutique
+                            </ion-select-option>
                             <ion-select-option value="Université">Université</ion-select-option>
                             <ion-select-option value="Depot pharmaceutique">Dépôt pharmaceutique</ion-select-option>
                         </ion-select>
                     </ion-item>
                     <ion-item>
                         <ion-label>Adresse Email</ion-label>
-                        <ion-input
-                            placeholder
-                            id="email"
-                            type="email"
-                            formControlName="email"
-                            required
-                        ></ion-input>
+                        <ion-input placeholder id="email" type="email" formControlName="email" required></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>Mot de passe</ion-label>
-                        <ion-input
-                            type="password"
-                            placeholder
-                            id="password"
-                            class="form-control"
-                            formControlName="password"
-                        >
-                        </ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Entrer de nouveau le mot de passe</ion-label>
-                        <ion-input
-                            type="password"
-                            placeholder
-                            id="password"
-                            class="form-control"
-                            formControlName="password"
-                            required
-                        >
+                        <ion-input type="password" placeholder id="password" class="form-control"
+                            formControlName="password">
                         </ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label>Téléphone</ion-label>
-                        <ion-input
-                            type="number"
-                            placeholder
-                            id="gsm"
-                            class="form-control"
-                            formControlName="gsm"
-                            required
-                        >
-                        </ion-input>
-                        <ion-input
-                            type="hidden"
-                            placeholder
-                            id="device"
-                            class="form-control"
-                            formControlName="device"
-                        >
-                        </ion-input>
-                        <ion-input
-                            type="hidden"
-                            placeholder
-                            id="geocoding"
-                            class="form-control"
-                            formControlName="geocoding"
-                        >
-                        </ion-input>
-                        <ion-input
-                            type="hidden"
-                            placeholder
-                            id="validate"
-                            class="form-control"
-                            formControlName="validate"
-                        >
+                        <ion-input type="number" placeholder id="gsm" class="form-control">
                         </ion-input>
                     </ion-item>
-
-                    <ion-button
-                        expand="block"
-                        color="primary"
-                        ion-button
-                        type="submit"
-                        block
-                    >
+                    <ion-button expand="block" color="primary" class="submit-btn" type="submit">
                         Validez votre inscription
                     </ion-button>
-                    <ion-button
-                        expand="block"
-                        color="primary"
-                        class="submit-btn"
-                        type="submit"
-                        [disabled]="!account_form.valid"
-                    >
-                        Validez votre inscription
-                    </ion-button>
-
                 </form>
             </ion-col>
         </ion-row>
     </ion-grid>
 </ion-content>
+<ion-footer></ion-footer>

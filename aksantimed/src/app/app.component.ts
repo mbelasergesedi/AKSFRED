@@ -7,60 +7,68 @@ import { AuthService } from './services/AuthService';
 import { environment } from './environments/environment';
 import * as firebase from 'firebase';
 import { ConnectionService } from 'ng-connection-service';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { Router } from '@angular/router';
+import { FcmProvider } from './services/fcm.services';
+import { ToastController } from '@ionic/angular';
+import { Subject } from 'rxjs/Subject';
+import { tap } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  isConnected: boolean;
+  isConnected: any;
   status: string;
+
   constructor(
     private platform: Platform,
+    private fcm: FCM,
+    private router: Router,
+    private toastCtrl: ToastController,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public authenticationService: AuthService,
-    private connectionService: ConnectionService
-,
+    private connectionService: ConnectionService,
     private menu: MenuController
   ) {
-
     firebase.initializeApp(environment.firebase);
-
-    // this.initializeApp();
-
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
       if (this.isConnected) {
         this.status = 'Connecté à Internet';
-        console.log( this.status);
+
+        // tslint:disable-next-line: no-unused-expression
       } else {
-        this.status = 'Pas de connection Internet';
-        console.log( this.status);
+        !this.isConnected;
+      }
+      {
+        this.status = 'Pas Connecté à Internet';
       }
     });
+    this.splashScreen.show();
+    this.splashScreen.hide();
   }
 
   initializeApp() {
-      this.platform.ready().then(() => {
+    this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+    this.fcm.getToken().then(token => {
+      console.log(token);
+    });
+    this.fcm.onTokenRefresh().subscribe(token => {
+      console.log(token);
+    });
+    this.fcm.onNotification().subscribe(data => {
+      console.log(data);
+      if (data.wasTapped) {
+        console.log('Received in background');
+      } else {
+        console.log('Received in foreground');
+      }
+    });
   }
-
-  openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }
-
-  openEnd() {
-    this.menu.open('end');
-  }
-
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
-  }
-
-
 }

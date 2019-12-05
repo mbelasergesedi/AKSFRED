@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthenticateService } from '../../services/authentication.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SchoolsService } from '../../services/school.service';
 import { VilleService } from '../../services/city.service';
@@ -11,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Customers } from '../../model/customers.model';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -23,7 +23,6 @@ export class AccountComponent implements OnInit {
   account_form: FormGroup;
 
   errorMessage = '';
-
   // tslint:disable-next-line: variable-name
   validation_messages = {
     email: [
@@ -43,6 +42,7 @@ export class AccountComponent implements OnInit {
   [x: string]: any;
   list: Customers[];
   signupForm: FormGroup;
+  ville: any;
 
   successMessage: string;
 
@@ -52,8 +52,16 @@ export class AccountComponent implements OnInit {
               private villeService: VilleService,
               private db: AngularFirestore,
               private qryCustomerService: QryCustomerService,
+              private toastController: ToastController,
               private router: Router) {
 
+  }
+  async logInToast() {
+    const toast = await this.toastController.create({
+      message: 'Vous êtes deconnecté.',
+      duration: 2000
+    });
+    toast.present();
   }
   ngOnInit() {
     this.initForm();
@@ -69,16 +77,29 @@ export class AccountComponent implements OnInit {
     ).subscribe(ville => {
       this.villeRef = ville;
       this.ville = ville;
-      console.log(this.ville);
+
     });
   }
   initForm() {
     // Validations patterns
+    // Validations patterns
     this.account_form = this.formBuilder.group({
+      civilite: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
       nom: new FormControl('', Validators.compose([
         Validators.required
       ])),
       prenom: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      profession: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      ville: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      structure: new FormControl('', Validators.compose([
         Validators.required
       ])),
       email: new FormControl('', Validators.compose([
@@ -89,26 +110,11 @@ export class AccountComponent implements OnInit {
         Validators.minLength(5),
         Validators.required
       ])),
-      structure: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      device: new FormControl('', Validators.compose([
-      ])),
-      geocoding: new FormControl('', Validators.compose([
-      ])),
 
-      ville: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
       validate: new FormControl('', Validators.compose([
         Validators.required
       ])),
-      profession: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      civilite: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
+
       gsm: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(8),
@@ -120,7 +126,7 @@ export class AccountComponent implements OnInit {
     // 1. On cherche si l'email de l'utilisateur est déjà présent dans la DB;
     this.itemCollection = this.db.collection<any[]>('customers', ref => ref.where('email', '==',
       this.account_form.get('email').value));
-    this.items = this.itemCollection.valueChanges().subscribe((val: any) => {
+    this.items = this.itemCollection.valueChanges().subscribe(async (val: any) => {
       this.enregistrement = val;
 
       // 2. S'il n'est pas présent, on l'inscrit dans la DB et dans système d'authentification;
@@ -128,16 +134,22 @@ export class AccountComponent implements OnInit {
         this.qryCustomerService.createCustomer(data);
         this.authenticateService.registerUser(this.account_form.get('email').value, this.account_form.get('password').value)
           .then(res => {
-            console.log(res);
             this.errorMessage = '';
             this.successMessage = 'Votre compte a été crée.';
           }, err => {
-            //console.log(err);
+            // console.log(err);
             this.errorMessage = err.message;
             this.successMessage = '';
           });
         // 3. Sinon on le previent qu'il est déjà présent dans la DB;
-      } else { console.log('Utilisateur déjà présent'); }
+      } else {
+        // console.log('Utilisateur déjà présent');
+        const toast = this.toastController.create({
+          message: 'Ce compte existe déjà.',
+          duration: 2000
+        });
+        (await toast).present();
+      }
     }
     );
   }
